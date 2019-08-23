@@ -22,7 +22,7 @@ export class Check {
     /**
      * @var string
      */
-    private id;
+    private id: string;
 
     /**
      * @var string
@@ -57,7 +57,7 @@ export class Check {
     /**
      * @var Position[]
      */
-    private positions = [];
+    private positions: Position[] = [];
 
     /**
      * @var buyer
@@ -247,7 +247,7 @@ export class Check {
      * @return array
      */
     public asArray() {
-        let result: {} = {
+        let result: {[key: string]: any} = {
             'task_id': this.id,
             'user': this.userContact,
             'print': this.shouldPrint,

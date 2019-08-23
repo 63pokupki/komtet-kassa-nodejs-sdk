@@ -17,22 +17,22 @@ export class Correction {
     /**
      * @var string
      */
-    private type;
+    private type: string;
 
     /**
      * @var string
      */
-    private date;
+    private date: string;
 
     /**
      * @var string
      */
-    private document;
+    private document: string;
 
     /**
      * @var string
      */
-    private description;
+    private description: string;
 
     /**
      * @param string type Correction type (Correction::TYPE_*)
@@ -42,7 +42,7 @@ export class Correction {
      *
      * @return Correction
      */
-    constructor(type, date, document, description) {
+    constructor(type: string, date: string, document: string, description: string) {
         this.type = type;
         this.date = date;
         this.document = document;
@@ -56,7 +56,7 @@ export class Correction {
      *
      * @return Correction
      */
-    public static createSelf(date, document, description) {
+    public static createSelf(type: string, date: string, document: string, description: string) {
         return new Correction(Correction.TYPE_SELF, date, document, description);
     }
 
@@ -67,7 +67,7 @@ export class Correction {
      *
      * @return Correction
      */
-    public static createForced(date, document, description) {
+    public static createForced(type: string, date: string, document: string, description: string) {
         return new Correction(Correction.TYPE_FORCED, date, document, description);
     }
 

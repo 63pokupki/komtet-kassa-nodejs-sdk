@@ -57,7 +57,7 @@ export class OrderManager {
      *
      * @return mixed
      */
-    public getOrderInfo(oid) {
+    public getOrderInfo(oid: number) {
         return this.client.sendRequest(`api/shop/v1/orders/${oid}`);
     }
 
@@ -69,7 +69,7 @@ export class OrderManager {
      *
      * @return mixed
      */
-    public deleteOrder(oid) {
+    public deleteOrder(oid: number) {
         return this.client.sendRequest(`api/shop/v1/orders/${oid}`, null, 'DELETE');
     }
 

@@ -1,0 +1,33 @@
+import { Vat } from './Vat';
+import { Agent } from './Agent';
+import { Nomenclature } from './Nomenclature';
+export declare class Position {
+    private id;
+    private name;
+    private price;
+    private quantity;
+    private total;
+    private discount;
+    private vat;
+    private measureName;
+    private calcMethod;
+    private calcSubject;
+    private excise;
+    private countryCode;
+    private declarationNumber;
+    private agent;
+    private nomenclature;
+    constructor(name: string, price: number, quantity: number, total: number, discount: number, vat: Vat);
+    setId(value: string): Position;
+    setMeasureName(value: string): Position;
+    setCalculationMethod(calc_method: string): Position;
+    setCalculationSubject(calc_subject: string): Position;
+    setExcise(value: number): Position;
+    setCountryCode(value: string): Position;
+    setDeclarationNumber(value: string): Position;
+    setAgent(agent: Agent): Position;
+    setNomenclature(nomenclature: Nomenclature): Position;
+    getTotal(): number;
+    setTotal(total: number): Position;
+    asArray(): {};
+}

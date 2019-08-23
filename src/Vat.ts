@@ -40,7 +40,7 @@ export class Vat {
      */
     public static RATE_120 = '120';
 
-    private rate;
+    private rate: any;
 
     /**
      * @param string|int|float rate See Vat::RATE_*

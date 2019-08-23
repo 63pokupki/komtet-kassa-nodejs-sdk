@@ -51,7 +51,7 @@ export class Buyer {
      * @return array
      */
     public  asArray() {
-        let data = {};
+        let data: {[key: string]: any} = {};
 
         if (this.name) {
             data['name'] = this.name;

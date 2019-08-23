@@ -218,7 +218,7 @@ export class Position {
      *
      * @return Position
      */
-    public setTotal(total): Position {
+    public setTotal(total: number): Position {
         this.total = total;
 
         return this;
@@ -228,7 +228,7 @@ export class Position {
      * @return array
      */
     public asArray(): {} {
-        let result = {
+        let result: {[key: string]: any;} = {
             'name': this.name,
             'price': this.price,
             'quantity': this.quantity,

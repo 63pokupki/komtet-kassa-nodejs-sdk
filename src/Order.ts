@@ -203,7 +203,7 @@ export class Order {
      *
      * @return Order
      */
-    public applyDiscount(checkDiscount): Order {
+    public applyDiscount(checkDiscount: number): Order {
         let positionsTotal = this.getTotalPositionsSum();
         let checkPositions = this.getPositions();
 
@@ -232,7 +232,7 @@ export class Order {
      * @return array
      */
     public asArray() {
-        let result = {
+        let result: {[key: string]: any;} = {
             'order_id': this.order_id,
             'client_address': this.client_address,
             'client_phone': this.client_phone,

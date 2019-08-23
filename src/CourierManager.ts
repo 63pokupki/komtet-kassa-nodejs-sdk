@@ -1,3 +1,4 @@
+import { Client } from "./Client";
 
 
 /**
@@ -9,18 +10,16 @@
 
 
 
-export class CourierManager
-{
+export class CourierManager {
     /**
      * @var Client
      */
-    private client;
+    private client: Client;
 
     /**
      * @param Client client
      */
-    constructor(Client client)
-    {
+    constructor(client: Client) {
         this.client = client;
     }
 
@@ -33,10 +32,9 @@ export class CourierManager
      *
      * @return mixed
      */
-     public getCouriers(start='0', limit='10')
-     {
-         path = sprintf('api/shop/v1/couriers?start=%s&limit=%s', start, limit);
-         return this.client->sendRequest(path);
-     }
+    public getCouriers(start = '0', limit = '10') {
+        let path = `api/shop/v1/couriers?start=${start}&limit=${limit}`;
+        return this.client.sendRequest(path);
+    }
 
 }

@@ -67,7 +67,10 @@ export class OrderPosition {
         total: number,
         measure_name: string,
         type: string,
-        quantity: number
+        quantity: number,
+        oid: string,
+        name: string,
+        price: number,
     }) {
 
 
@@ -103,7 +106,7 @@ export class OrderPosition {
      *
      * @return OrderPosition
      */
-    public setTotal(total): OrderPosition {
+    public setTotal(total: number): OrderPosition {
         this.total = total;
 
         return this;
@@ -113,7 +116,7 @@ export class OrderPosition {
      * @return array
      */
     public asArray() {
-        let result = {
+        let result: {[key: string]: any;} = {
             'order_item_id': this.oid,
             'name': this.name,
             'price': this.price,

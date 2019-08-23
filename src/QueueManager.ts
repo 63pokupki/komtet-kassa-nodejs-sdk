@@ -20,7 +20,7 @@ export class QueueManager {
     /**
      * @var array List of registered queues
      */
-    private queues: string[] = [];
+    private queues: {[key: string]: any;} = {}
 
     /**
      * @var string|null Name of the default queue
@@ -106,7 +106,7 @@ export class QueueManager {
      *
      * @return bool
      */
-    public async isQueueActive(name): Promise<boolean> {
+    public async isQueueActive(name: string): Promise<boolean> {
 
         let resp = false
 
