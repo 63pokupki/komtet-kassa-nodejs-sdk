@@ -1,0 +1,27 @@
+{
+  "name": "komtet-kassa-nodejs-sdk",
+  "version": "1.0.0",
+  "description": "komtet kassa nodejs sdk",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/63pokupki/komtet-kassa-nodejs-sdk.git"
+  },
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/63pokupki/komtet-kassa-nodejs-sdk/issues"
+  },
+  "homepage": "https://github.com/63pokupki/komtet-kassa-nodejs-sdk#readme",
+  "dependencies": {
+    "@types/node": "^12.7.2",
+    "axios": "^0.19.0",
+    "mocha": "^6.2.0",
+    "ts-mocha": "^6.0.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
