@@ -65,11 +65,11 @@ export class OrderPosition
     constructor(args = [])
     {
         defaultArgs = [
-            'vat' =>  Vat::RATE_NO,
-            'total' => null,
-            'measure_name' => null,
-            'type' => null,
-            'quantity' => 1
+            'vat' :  Vat::RATE_NO,
+            'total' : null,
+            'measure_name' : null,
+            'type' : null,
+            'quantity' : 1
         ];
         args = array_merge(defaultArgs, args);
 
@@ -96,7 +96,7 @@ export class OrderPosition
     /**
      * @return int|float
      */
-    publicgetTotal()
+    public getTotal()
     {
         return this.total;
     }
@@ -106,7 +106,7 @@ export class OrderPosition
      *
      * @return OrderPosition
      */
-    publicsetTotal(total)
+    public setTotal(total)
     {
         this.total = total;
 
@@ -116,15 +116,15 @@ export class OrderPosition
     /**
      * @return array
      */
-    publicasArray()
+    public asArray()
     {
         result = [
-            'order_item_id' => this.oid,
-            'name' => this.name,
-            'price' => this.price,
-            'quantity' => this.quantity,
-            'total' => this.total,
-            'vat' => this.vat->getRate()
+            'order_item_id' : this.oid,
+            'name' : this.name,
+            'price' : this.price,
+            'quantity' : this.quantity,
+            'total' : this.total,
+            'vat' : this.vat->getRate()
         ];
 
         if (this.measure_name !== null) {

@@ -30,7 +30,7 @@ export class AuthorisedPerson {
     /**
      * @return array
      */
-    public asArray() {
+    public  asArray() {
         return {
             'name': this.name,
             'inn': this.inn

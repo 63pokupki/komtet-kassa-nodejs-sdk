@@ -5,7 +5,7 @@
  /* TODO: вынести в отдельный репозиторий */
 export class ErrorSys {
 
-	public errorClass: string = 'Base'; // откуда вызывается ошибка
+	public  errorClass: string = 'Base'; // откуда вызывается ошибка
 
 	private ok: boolean; // Глобальный статус выполнения
 	private env: string; // тип окружения
@@ -43,7 +43,7 @@ export class ErrorSys {
 	/**
 	 * очистка стека
 	 */
-	public clear(): void {
+	public  clear(): void {
 		this.ok = true;
 		this.errorList = {};
 		this.devWarningList = {};
@@ -60,7 +60,7 @@ export class ErrorSys {
 	 *
 	 * @return boolean
 	 */
-	public isOk(): boolean {
+	public  isOk(): boolean {
 		return this.ok;
 	}
 
@@ -69,7 +69,7 @@ export class ErrorSys {
 	 *
 	 * @return boolean
 	 */
-	public isDev(): boolean {
+	public  isDev(): boolean {
 		return this.ifDevMode;
 	}
 
@@ -78,7 +78,7 @@ export class ErrorSys {
 	 *
 	 * @param keyError
 	 */
-	public decl(keyError: string, infoError: string) {
+	public  decl(keyError: string, infoError: string) {
 		this.errorDeclareList[keyError] = infoError;
 	}
 
@@ -87,7 +87,7 @@ export class ErrorSys {
 	 *
 	 * @param keyErrorList
 	 */
-	public declare(keyErrorList: string[]) {
+	public  declare(keyErrorList: string[]) {
 		for (let i = 0; i < keyErrorList.length; i++) {
 			this.errorDeclareList[keyErrorList[i]] = null;
 		}
@@ -98,7 +98,7 @@ export class ErrorSys {
 	 *
 	 * @param keyErrorList
 	 */
-	public declareEx(keyErrorList: { [key: string]: string }) {
+	public  declareEx(keyErrorList: { [key: string]: string }) {
 
 		Object.assign(this.errorDeclareList, keyErrorList);
 	}
@@ -110,7 +110,7 @@ export class ErrorSys {
 	 * @param string sError - сообщение
 	 * @return void
 	 */
-	public error(kError: string, sError?: string): void {
+	public  error(kError: string, sError?: string): void {
 
 		if (sError) {
 			this.ok = false; // При любой одной ошибке приложение отдает отрицательный ответ
@@ -130,7 +130,7 @@ export class ErrorSys {
 	}
 
 
-	public getErrorCount(): number {
+	public  getErrorCount(): number {
 		return this.errorCount;
 	}
 
@@ -138,7 +138,7 @@ export class ErrorSys {
 	 * Добавление ошибки в стек по ключу декларирования
 	 * @param kError 
 	 */
-	public setError(kError: string) {
+	public  setError(kError: string) {
 		this.ok = false; // При любой одной ошибке приложение отдает отрицательный ответ
 		this.errorList[kError] = this.errorDeclareList[kError];
 
@@ -156,7 +156,7 @@ export class ErrorSys {
 	 * @param kError // Ключ ошибки - для тестирования
 	 * @param sError // Сообщение об ошибке
 	 */
-	public errorEx(e: any, kError: string, sError: string): void {
+	public  errorEx(e: any, kError: string, sError: string): void {
 		this.ok = false; // При любой одной ошибке приложение отдает отрицательный ответ
 		this.errorList[kError] = sError;
 
@@ -175,7 +175,7 @@ export class ErrorSys {
 	 * @param string sNotice - сообщение
 	 * @return void
 	 */
-	public notice(kNotice: string, sNotice: string): void {
+	public  notice(kNotice: string, sNotice: string): void {
 		this.noticeList[kNotice] = sNotice;
 	}
 
@@ -186,7 +186,7 @@ export class ErrorSys {
 	 * @param string sNotice - сообщение
 	 * @return void
 	 */
-	public devNotice(kNotice: string, sNotice: string): void {
+	public  devNotice(kNotice: string, sNotice: string): void {
 		if (this.ifDevMode) {
 			this.devNoticeList[kNotice] = sNotice;
 			//this.devLogList.push('N:[' + kNotice + '] - ' + sNotice);
@@ -201,7 +201,7 @@ export class ErrorSys {
 	 * @param string sWarning - сообщение
 	 * @return void
 	 */
-	public warning(kWarning: string, sWarning: string): void {
+	public  warning(kWarning: string, sWarning: string): void {
 		this.warningList[kWarning] = sWarning;
 	}
 
@@ -213,7 +213,7 @@ export class ErrorSys {
 	 * @param string sWarning - сообщение
 	 * @return void
 	 */
-	public devWarning(kWarning: string, sWarning: string): void {
+	public  devWarning(kWarning: string, sWarning: string): void {
 		if (this.ifDevMode) {
 			this.devWarningList[kWarning] = sWarning;
 			//this.devLogList.push('W:[' + kWarning + '] - ' + sWarning);
@@ -228,21 +228,21 @@ export class ErrorSys {
 	 *
 	 * @return array|null - возвращаются ошибки (key, val)
 	 */
-	public getErrors(): { [s: string]: string } {
+	public  getErrors(): { [s: string]: string } {
 		return this.errorList;
 	}
 
 	/**
 	 * Получить все декларации для DEV режима
 	 */
-	public getDeclareList(): { [s: string]: string } {
+	public  getDeclareList(): { [s: string]: string } {
 		return this.errorDeclareList;
 	}
 
 	/**
 	 * Получить все декларации для DEV режима
 	 */
-	public getDevDeclare(): { [s: string]: string } {
+	public  getDevDeclare(): { [s: string]: string } {
 		for (let k in this.errorDeclareList) {
 			if (this.errorList[k] && !this.errorDeclareList[k]) {
 				this.errorDeclareList[k] = this.errorList[k];
@@ -257,7 +257,7 @@ export class ErrorSys {
 	 *
 	 * @return array|null - возвращаются предупреждения (key, val)
 	 */
-	public getDevWarning(): { [s: string]: string } {
+	public  getDevWarning(): { [s: string]: string } {
 		return this.devWarningList;
 	}
 
@@ -266,7 +266,7 @@ export class ErrorSys {
 	 *
 	 * @return array|null - возвращаются предупреждения (key, val)
 	 */
-	public getWarning(): { [s: string]: string } {
+	public  getWarning(): { [s: string]: string } {
 
 		return this.warningList;
 	}
@@ -276,7 +276,7 @@ export class ErrorSys {
 	 *
 	 * @return array|null - возвращаются уведомления (key, val)
 	 */
-	public getDevNotice(): { [s: string]: string } {
+	public  getDevNotice(): { [s: string]: string } {
 
 		return this.devNoticeList;
 	}
@@ -286,7 +286,7 @@ export class ErrorSys {
 	 *
 	 * @return array|null - возвращаются уведомления (key, val)
 	 */
-	public getNotice(): { [s: string]: string } {
+	public  getNotice(): { [s: string]: string } {
 		return this.noticeList;
 	}
 
@@ -295,7 +295,7 @@ export class ErrorSys {
 	 *
 	 * @return array|null - возвращаются уведомления (key, val)
 	 */
-	public getDevLog(): { [s: string]: string } {
+	public  getDevLog(): { [s: string]: string } {
 		return this.devLogList;
 	}
 

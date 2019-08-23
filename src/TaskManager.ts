@@ -29,7 +29,7 @@ export  class TaskManager
      *
      * @return mixed
      */
-    public async getTaskInfo(taskId: string): Promise<any>
+    public  async getTaskInfo(taskId: string): Promise<any>
     {
         return this.client.sendRequest(`api/shop/v1/tasks/` + taskId);
     }

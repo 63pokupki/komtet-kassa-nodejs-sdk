@@ -32,7 +32,7 @@ export class OrderManager
      *
      * @return mixed
      */
-    publiccreateOrder(order)
+    public createOrder(order)
     {
         path = sprintf('api/shop/v1/orders');
         return this.client->sendRequest(path, order->asArray());
@@ -47,7 +47,7 @@ export class OrderManager
      *
      * @return mixed
      */
-    publicupdateOrder(oid, order)
+    public updateOrder(oid, order)
     {
         path = sprintf('api/shop/v1/orders/%s', oid);
         return this.client->sendRequest(path, order->asArray(), 'PUT');
@@ -61,7 +61,7 @@ export class OrderManager
     *
     * @return mixed
     */
-    publicgetOrderInfo(oid)
+    public getOrderInfo(oid)
     {
         path = sprintf('api/shop/v1/orders/%s', oid);
         return this.client->sendRequest(path);
@@ -75,7 +75,7 @@ export class OrderManager
      *
      * @return mixed
      */
-    publicdeleteOrder(oid)
+    public deleteOrder(oid)
     {
         path = sprintf('api/shop/v1/orders/%s', oid);
         return this.client->sendRequest(path, null, 'DELETE');
@@ -91,7 +91,7 @@ export class OrderManager
      *
      * @return mixed
      */
-    publicgetOrders(start='0', limit='10', courier_id=null, date_start=null)
+    public getOrders(start='0', limit='10', courier_id=null, date_start=null)
     {
         path = sprintf('api/shop/v1/orders?start=%s&limit=%s', start, limit);
 

@@ -42,7 +42,7 @@ export class QueueManager
      *
      * @return QueueManager
      */
-    publicregisterQueue(name, id)
+    public registerQueue(name, id)
     {
         this.queues[name] = id;
 
@@ -56,7 +56,7 @@ export class QueueManager
      *
      * @return QueueManager
      */
-    publicsetDefaultQueue(name)
+    public setDefaultQueue(name)
     {
         if (!this.hasQueue(name)) {
             throw new \InvalidArgumentException(sprintf('Unknown queue "%s"', name));
@@ -74,7 +74,7 @@ export class QueueManager
      *
      * @return bool
      */
-    publichasQueue(name)
+    public hasQueue(name)
     {
         return array_key_exists(name, this.queues);
     }
@@ -87,7 +87,7 @@ export class QueueManager
      *
      * @return mixed
      */
-    publicputCheck(check, queueName = null)
+    public putCheck(check, queueName = null)
     {
         if (queueName === null) {
             if (this.defaultQueue === null) {
@@ -111,7 +111,7 @@ export class QueueManager
      *
      * @return bool
      */
-    publicisQueueActive(name)
+    public isQueueActive(name)
     {
         if (!this.hasQueue(name)) {
             throw new \InvalidArgumentException(sprintf('Unknown queue "%s"', name));

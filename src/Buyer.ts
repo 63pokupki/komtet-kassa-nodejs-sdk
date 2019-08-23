@@ -32,7 +32,7 @@ export class Buyer {
      *
      * @return Buyer
      */
-    public setName(name: string) {
+    public  setName(name: string) {
         this.name = name;
         return this;
     }
@@ -42,7 +42,7 @@ export class Buyer {
      *
      * @return Buyer
      */
-    public setINN(inn: string) {
+    public  setINN(inn: string) {
         this.inn = inn;
         return this;
     }
@@ -50,7 +50,7 @@ export class Buyer {
     /**
      * @return array
      */
-    public asArray() {
+    public  asArray() {
         let data = {};
 
         if (this.name) {

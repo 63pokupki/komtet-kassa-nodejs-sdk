@@ -1,3 +1,5 @@
+import { OrderPosition } from "./OrderPosition";
+import { Payment } from './Payment';
 
 
 /**
@@ -9,87 +11,86 @@
 
 
 
-export class Order
-{
+export class Order {
     /**
      * @var int
      */
-    private order_id;
+    private order_id: number;
 
     /**
      * @var string
      */
-    private state;
+    private state: string;
 
     /**
      * @var string
      */
-    private sno;
+    private sno: string;
 
     /**
      * @var bool
      */
-    private is_paid = false;
+    private is_paid: boolean = false;
 
     /**
      * @var string
      */
-    private description = '';
+    private description: string = '';
 
     /**
      * @var OrderPosition[]
      */
-    private items = [];
+    private items: OrderPosition[] = [];
 
     /**
      * @var string
      */
-    private client_name;
+    private client_name: string;
 
     /**
      * @var string
      */
-    private client_address;
+    private client_address: string;
 
     /**
      * @var string
      */
-    private client_phone;
+    private client_phone: string;
 
     /**
      * @var string
      */
-    private client_email;
+    private client_email: string;
 
     /**
      * @var string
      */
-    private date_start;
+    private date_start: string;
 
     /**
      * @var string
      */
-    private date_end;
+    private date_end: string;
 
     /**
      * @var string
      */
-    private callback_url;
+    private callback_url: string;
 
     /**
      * @var int
      */
-    private courier_id;
+    private courier_id: number;
 
     /**
      * @var Payment
      */
-    private payment_type;
+    private payment_type: string;
 
     /**
      * @var int|float
      */
-    private prepayment;
+    private prepayment: number;
 
     /**
      * @param int oid A unique order id in a shop
@@ -101,9 +102,8 @@ export class Order
      *
      * @return Order
      */
-    constructor(order_id, state=null, sno=null, is_paid=false,
-                                prepayment = 0, payment_type = Payment::TYPE_CARD)
-    {
+    constructor(order_id: number, state: string, sno: string, is_paid: boolean,
+        prepayment: number = 0, payment_type = Payment.TYPE_CARD) {
         this.order_id = order_id;
         this.is_paid = is_paid;
 
@@ -121,8 +121,7 @@ export class Order
      * @param string name Name of the recipient
      *
      */
-    publicsetClient(address, phone, email = null, name = null)
-    {
+    public setClient(address: string, phone: string, email: string, name: string) {
         this.client_address = address;
         this.client_phone = phone;
 
@@ -134,8 +133,7 @@ export class Order
      * @param string date_end Final order delivery time
      *
      */
-    publicsetDeliveryTime(date_start, date_end)
-    {
+    public setDeliveryTime(date_start: string, date_end: string) {
         this.date_start = date_start;
         this.date_end = date_end;
     }
@@ -144,8 +142,7 @@ export class Order
      * @param string description Order comment
      *
      */
-    publicsetDescription(description)
-    {
+    public setDescription(description: string) {
         this.description = description;
     }
 
@@ -159,17 +156,15 @@ export class Order
      * @param string type Order type
      *
      */
-    publicaddPosition(OrderPosition orderPosition)
-    {
-        array_push(this.items, orderPosition);
+    public addPosition(orderPosition: OrderPosition) {
+        this.items.push(orderPosition)
     }
 
     /**
      * @param string callback_url callback url for Order
      *
      */
-    publicsetCallbackUrl(callback_url)
-    {
+    public setCallbackUrl(callback_url: string) {
         this.callback_url = callback_url;
     }
 
@@ -177,27 +172,24 @@ export class Order
      * @param int courier_id ID courier
      *
      */
-    publicsetCourierId(courier_id)
-    {
+    public setCourierId(courier_id: number) {
         this.courier_id = courier_id;
     }
 
     /**
      * @return array
      */
-    publicgetPositions()
-    {
+    public getPositions(): OrderPosition[] {
         return this.items;
     }
 
     /**
      * @return int|float
      */
-    publicgetTotalPositionsSum()
-    {
-        positionsTotal = 0;
-        foreach (this.items as item) {
-            positionsTotal += item->getTotal();
+    public getTotalPositionsSum(): number {
+        let positionsTotal = 0;
+        for (let i = 0; i < this.items.length; i++) {
+            positionsTotal += this.items[i].getTotal();
         }
 
         return positionsTotal;
@@ -211,24 +203,26 @@ export class Order
      *
      * @return Order
      */
-    publicapplyDiscount(checkDiscount)
-    {
-        positionsTotal = this.getTotalPositionsSum();
-        checkPositions = this.getPositions();
+    public applyDiscount(checkDiscount): Order {
+        let positionsTotal = this.getTotalPositionsSum();
+        let checkPositions = this.getPositions();
 
-        positionsCount = count(checkPositions);
-        accumulatedDiscount = 0;
+        let positionsCount = checkPositions.length;
+        let accumulatedDiscount = 0;
 
-        foreach (checkPositions as index => position) {
+        let curPositionDiscount = 0;
+
+        /* TODO: вохможно тут не правильно округляется */
+        for (let index = 0; index < checkPositions.length; index++) {
             if (index < positionsCount - 1) {
-                positionPricePercent = position->getTotal() / positionsTotal * 100;
-                curPositionDiscount = round(checkDiscount * positionPricePercent / 100, 2);
+                let positionPricePercent = checkPositions[index].getTotal() / positionsTotal * 100;
+                curPositionDiscount = Number((checkDiscount * positionPricePercent / 100).toFixed(2));
                 accumulatedDiscount += curPositionDiscount;
             } else {
-                curPositionDiscount = round(checkDiscount - accumulatedDiscount, 2);
+                curPositionDiscount = Number((checkDiscount - accumulatedDiscount).toFixed(2));
             }
 
-            position->setTotal(position->getTotal() - curPositionDiscount);
+            checkPositions[index].setTotal(checkPositions[index].getTotal() - curPositionDiscount);
         }
 
         return this;
@@ -237,23 +231,19 @@ export class Order
     /**
      * @return array
      */
-    publicasArray()
-    {
-        result = [
-            'order_id' => this.order_id,
-            'client_address' => this.client_address,
-            'client_phone' => this.client_phone,
-            'is_paid' => this.is_paid,
-            'description' => this.description,
-            'date_start' => this.date_start,
-            'date_end' => this.date_end,
-            'items' => array_map(
-                function (item) {
-                    return item->asArray();
-                },
-                this.items
-            ),
-        ];
+    public asArray() {
+        let result = {
+            'order_id': this.order_id,
+            'client_address': this.client_address,
+            'client_phone': this.client_phone,
+            'is_paid': this.is_paid,
+            'description': this.description,
+            'date_start': this.date_start,
+            'date_end': this.date_end,
+            'items': this.items.map((item: OrderPosition, key) => {
+                return item.asArray();
+            }),
+        };
 
         if (this.client_email !== null) {
             result['client_email'] = this.client_email;

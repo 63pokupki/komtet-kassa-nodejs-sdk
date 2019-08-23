@@ -12,48 +12,45 @@
 /**
 * Код товара (маркировка)
 */
-export class Nomenclature
-{
+export class Nomenclature {
     /**
      * Меховые изделия
      */
-    public staticFURS = 'furs';
+    public static FURS = 'furs';
 
     /**
      * Лекарства
      */
-    public staticMEDICINES = 'medicines';
+    public static MEDICINES = 'medicines';
 
     /**
      * Табачная продукция
      */
-    public staticTOBACCO = 'tobacco';
+    public static TOBACCO = 'tobacco';
 
     /**
      * Обувь
      */
-    public staticSHOES = 'shoes';
+    public static SHOES = 'shoes';
 
     /**
      * @var array
      */
-    private nomenclature_code;
+    private nomenclature_code: {};
 
 
-    constructor(nomenclature_type, gtin, serial_number)
-    {
-        this.nomenclature_code = [
-            'type' => nomenclature_type,
-            'gtin' => gtin,
-            'serial' => serial_number
-        ];
+    constructor(nomenclature_type: string, gtin: string, serial_number: string) {
+        this.nomenclature_code = {
+            'type': nomenclature_type,
+            'gtin': gtin,
+            'serial': serial_number
+        };
     }
 
     /**
      * @return array
      */
-    publicasArray()
-    {
+    public asArray(): {} {
         return this.nomenclature_code;
     }
 }

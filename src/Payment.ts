@@ -9,32 +9,31 @@
 
 
 
-export class Payment
-{
+export class Payment {
     /**
      * Электронными
      */
-    public staticTYPE_CARD = 'card';
+    public  static TYPE_CARD = 'card';
 
     /**
      * Наличными
      */
-    public staticTYPE_CASH = 'cash';
+    public  static TYPE_CASH = 'cash';
 
     /**
      * Cумма предоплатой (зачет аванса и/или предыдущих платежей)
      */
-    public staticTYPE_PREPAYMENT = 'prepayment';
+    public  static TYPE_PREPAYMENT = 'prepayment';
 
     /**
      * Cумма постоплатой (кредит)
      */
-    public staticTYPE_CREDIT = 'credit';
+    public  static TYPE_CREDIT = 'credit';
 
     /**
      * Cумма встречным предлжением
      */
-    public staticTYPE_COUNTER_PROVISIONING = 'counter_provisioning';
+    public  static TYPE_COUNTER_PROVISIONING = 'counter_provisioning';
 
     /**
      * @var string
@@ -52,8 +51,7 @@ export class Payment
      *
      * @return Payment
      */
-    constructor(type, sum)
-    {
+    constructor(type, sum) {
         this.type = type;
         this.sum = sum;
     }
@@ -61,19 +59,17 @@ export class Payment
     /**
      * @return int|float
      */
-    publicgetSum()
-    {
+    public  getSum() {
         return this.sum;
     }
 
     /**
      * @return array
      */
-    publicasArray()
-    {
-        return [
-            'type' => this.type,
-            'sum' => this.sum
-        ];
+    public  asArray() {
+        return {
+            'type': this.type,
+            'sum': this.sum
+        };
     }
 }

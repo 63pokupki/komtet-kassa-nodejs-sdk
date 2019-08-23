@@ -1,4 +1,8 @@
-
+import { Correction } from "./Correction";
+import { Payment } from "./Payment";
+import { Vat } from "./Vat";
+import { AuthorisedPerson } from "./AuthorisedPerson";
+import { Position } from "./Position";
 
 /**
  * This file is part of the komtet/kassa-sdk library
@@ -9,62 +13,60 @@
 
 
 
-export class CorrectionCheck
-{
-    public staticINTENT_SELL = 'sellCorrection';
-    public staticINTENT_SELL_RETURN = 'sellReturnCorrection';
+export class CorrectionCheck {
+    public static INTENT_SELL = 'sellCorrection';
+    public static INTENT_SELL_RETURN = 'sellReturnCorrection';
 
     /**
      * @var string
      */
-    private id;
+    private id: string;
 
     /**
      * @var string
      */
-    private intent;
+    private intent: string;
 
     /**
      * @var string
      */
-    private printerNumber;
+    private printerNumber: string;
 
     /**
      * @var int
      */
-    private taxSystem;
+    private taxSystem: number;
 
     /**
      * @var Correction
      */
-    private correction;
+    private correction: Correction;
 
     /**
      * @var Payment
      */
-    private payment;
+    private payment: Payment;
 
     /**
      * @var Position
      */
-    private position;
+    private position: Position;
 
     /**
      * @var AuthorisedPerson
      */
-    private authorised_person;
+    private authorised_person: AuthorisedPerson;
 
     /**
      * @param string id An unique ID provided by an online store
      * @param string intent One of CorrectionCheck::INTENT_* constants
      * @param string printerNumber Printer's serial number
      * @param int taxSystem One of TaxSystem::* constants
-     * @param Correction correction Correction data
+     * @param correction: Correction Correction data
      *
      * @return CorrectionCheck
      */
-    constructor(id, intent, printerNumber, taxSystem, Correction correction)
-    {
+    constructor(id: string, intent: string, printerNumber: string, taxSystem: number, correction: Correction) {
         this.id = id;
         this.intent = intent;
         this.printerNumber = printerNumber;
@@ -76,26 +78,24 @@ export class CorrectionCheck
      * @param string id An unique ID provided by an online store
      * @param string printerNumber Printer's serial number
      * @param int taxSystem One of TaxSystem::* constants
-     * @param Correction correction Correction data
+     * @param correction: Correction Correction data
      *
      * @return CorrectionCheck
      */
-    public static function createSell(id, printerNumber, taxSystem, Correction correction)
-    {
-        return new static(id, static::INTENT_SELL, printerNumber, taxSystem, correction);
+    public static createSell(id: string, printerNumber: string, taxSystem: number, correction: Correction) {
+        return new CorrectionCheck(id, CorrectionCheck.INTENT_SELL, printerNumber, taxSystem, correction);
     }
 
     /**
      * @param string id An unique ID provided by an online store
      * @param string printerNumber Printer's serial number
      * @param int taxSystem One of TaxSystem::* constants
-     * @param Correction correction Correction data
+     * @param correction: Correction Correction data
      *
      * @return CorrectionCheck
      */
-    public static function createSellReturn(id, printerNumber, taxSystem, Correction correction)
-    {
-        return new static(id, static::INTENT_SELL_RETURN, printerNumber, taxSystem, correction);
+    public static createSellReturn(id: string, printerNumber: string, taxSystem: number, correction: Correction) {
+        return new CorrectionCheck(id, CorrectionCheck.INTENT_SELL_RETURN, printerNumber, taxSystem, correction);
     }
 
     /**
@@ -104,19 +104,19 @@ export class CorrectionCheck
      *
      * @return CorrectionCheck
      */
-    publicsetPayment(Payment payment, Vat vat)
-    {
-        sum = payment->getSum();
+    public setPayment(payment: Payment, vat: Vat): CorrectionCheck {
+        let sum = payment.getSum();
         this.payment = payment;
-        this.position = [
-            'name' => this.intent == static::INTENT_SELL
+        this.position = new Position(
+            this.intent == CorrectionCheck.INTENT_SELL
                 ? 'Коррекция прихода'
-                : 'Коррекция расхода',
-            'price' => sum,
-            'quantity' => 1,
-            'total' => sum,
-            'vat' => vat->getRate()
-        ];
+                : 'Коррекция расхода', //name
+            sum, // price
+            1, // quantity
+            sum, // total
+            vat.getRate(), // discount
+            vat
+        );
 
         return this;
     }
@@ -126,27 +126,25 @@ export class CorrectionCheck
      *
      * @return CorrectionCheck
      */
-    publicsetAuthorisedPerson(AuthorisedPerson authorised_person)
-    {
-      this.authorised_person = authorised_person;
+    public setAuthorisedPerson(authorised_person: AuthorisedPerson): CorrectionCheck {
+        this.authorised_person = authorised_person;
 
-      return this;
+        return this;
     }
 
     /**
      * @return array
      */
-    publicasArray()
-    {
-        return [
-            'intent' => this.intent,
-            'task_id' => this.id,
-            'printer_number' => this.printerNumber,
-            'sno' => this.taxSystem,
-            'payments' => [this.payment->asArray()],
-            'positions' => [this.position],
-            'correction' => this.correction->asArray(),
-            'authorised_person' => this.authorised_person->asArray()
-        ];
+    public asArray() {
+        return {
+            'intent': this.intent,
+            'task_id': this.id,
+            'printer_number': this.printerNumber,
+            'sno': this.taxSystem,
+            'payments': [this.payment.asArray()],
+            'positions': [this.position],
+            'correction': this.correction.asArray(),
+            'authorised_person': this.authorised_person.asArray()
+        };
     }
 }

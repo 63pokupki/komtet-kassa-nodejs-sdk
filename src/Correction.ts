@@ -9,10 +9,10 @@
 
 
 
-export class Correction
-{
-    public staticTYPE_SELF = 'self';
-    public staticTYPE_FORCED = 'forced';
+export class Correction {
+
+    public static TYPE_SELF = 'self';
+    public static TYPE_FORCED = 'forced';
 
     /**
      * @var string
@@ -42,8 +42,7 @@ export class Correction
      *
      * @return Correction
      */
-    constructor(type, date, document, description)
-    {
+    constructor(type, date, document, description) {
         this.type = type;
         this.date = date;
         this.document = document;
@@ -57,9 +56,8 @@ export class Correction
      *
      * @return Correction
      */
-    public static function createSelf(date, document, description)
-    {
-        return new static(static::TYPE_SELF, date, document, description);
+    public static createSelf(date, document, description) {
+        return new Correction(Correction.TYPE_SELF, date, document, description);
     }
 
     /**
@@ -69,21 +67,19 @@ export class Correction
      *
      * @return Correction
      */
-    public static function createForced(date, document, description)
-    {
-        return new static(static::TYPE_FORCED, date, document, description);
+    public static createForced(date, document, description) {
+        return new Correction(Correction.TYPE_FORCED, date, document, description);
     }
 
     /**
      * @return array
      */
-    publicasArray()
-    {
-        return [
-            'type' => this.type,
-            'date' => this.date,
-            'document' => this.document,
-            'description' => this.description
-        ];
+    public asArray() {
+        return {
+            'type': this.type,
+            'date': this.date,
+            'document': this.document,
+            'description': this.description
+        };
     }
 }

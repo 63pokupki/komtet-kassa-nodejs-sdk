@@ -7,19 +7,16 @@
  * file that was distributed with this source code.
  */
 
-
-
-export class Cashier
-{
+export class Cashier {
     /**
      * @var string
      */
-    private name;
+    private name: string;
 
     /**
-     * @var int|float
+     * @var : string
      */
-    private inn;
+    private inn: string;
 
     /**
      * @param string name
@@ -27,8 +24,7 @@ export class Cashier
      *
      * @return Cashier
      */
-    constructor(name, inn)
-    {
+    constructor(name: string, inn: string) {
         this.name = name;
         this.inn = inn;
     }
@@ -36,11 +32,10 @@ export class Cashier
     /**
      * @return array
      */
-    publicasArray()
-    {
-        return [
-            'name' => this.name,
-            'inn' => this.inn
-        ];
+    public  asArray() {
+        return {
+            'name': this.name,
+            'inn': this.inn
+        };
     }
 }

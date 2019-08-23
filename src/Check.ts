@@ -1,3 +1,7 @@
+import { Cashier } from "./Cashier";
+import { Buyer } from './Buyer';
+import { Payment } from "./Payment";
+import { Position } from './Position';
 
 
 /**
@@ -9,12 +13,11 @@
 
 
 
-export class Check
-{
-    public staticINTENT_SELL = 'sell';
-    public staticINTENT_SELL_RETURN = 'sellReturn';
-    public staticINTENT_BUY = 'buy';
-    public staticINTENT_BUY_RETURN = 'buyReturn';
+export class Check {
+    public static  INTENT_SELL = 'sell';
+    public static  INTENT_SELL_RETURN = 'sellReturn';
+    public static  INTENT_BUY = 'buy';
+    public static  INTENT_BUY_RETURN = 'buyReturn';
 
     /**
      * @var string
@@ -24,22 +27,22 @@ export class Check
     /**
      * @var string
      */
-    private userContact;
+    private userContact: string;
 
     /**
      * @var string
      */
-    private intent;
+    private intent: string;
 
     /**
      * @var int
      */
-    private taxSystem;
+    private taxSystem: string;
 
     /**
      * @var string
      */
-    private paymentAddress;
+    private paymentAddress: string;
 
     /**
      * @var bool
@@ -49,7 +52,7 @@ export class Check
     /**
      * @var Payment[]
      */
-    private payments = [];
+    private payments: Payment[] = [];
 
     /**
      * @var Position[]
@@ -59,12 +62,12 @@ export class Check
     /**
      * @var buyer
      */
-    private buyer;
+    private buyer: Buyer;
 
     /**
      * @var Cashier
      */
-    private cashier;
+    private cashier: Cashier;
 
     /**
      * @param string id An unique ID provided by an online store
@@ -75,8 +78,7 @@ export class Check
      *
      * @return Check
      */
-    constructor(id, userContact, intent, taxSystem, paymentAddress=null)
-    {
+    constructor(id, userContact, intent, taxSystem, paymentAddress = null) {
         this.id = id;
         this.userContact = userContact;
         this.intent = intent;
@@ -92,9 +94,8 @@ export class Check
      *
      * @return Check
      */
-    public static function createSell(id, userContact, taxSystem, paymentAddress=null)
-    {
-        return new static(id, userContact, static::INTENT_SELL, taxSystem, paymentAddress);
+    public static  createSell(id, userContact, taxSystem, paymentAddress = null): Check {
+        return new Check(id, userContact, Check.INTENT_SELL, taxSystem, paymentAddress);
     }
 
     /**
@@ -105,10 +106,9 @@ export class Check
      *
      * @return Check
      */
-    public static function createSellReturn(id, userContact, taxSystem, paymentAddress=null)
-    {
-        return new static(id, userContact, static::INTENT_SELL_RETURN, taxSystem,
-                          paymentAddress);
+    public static  createSellReturn(id, userContact, taxSystem, paymentAddress = null): Check {
+        return new Check(id, userContact, Check.INTENT_SELL_RETURN, taxSystem,
+            paymentAddress);
     }
 
     /**
@@ -119,9 +119,8 @@ export class Check
      *
      * @return Check
      */
-    public static function createBuy(id, userContact, taxSystem, paymentAddress=null)
-    {
-        return new static(id, userContact, static::INTENT_BUY, taxSystem, paymentAddress);
+    public static  createBuy(id, userContact, taxSystem, paymentAddress = null): Check {
+        return new Check(id, userContact, Check.INTENT_BUY, taxSystem, paymentAddress);
     }
 
     /**
@@ -132,10 +131,9 @@ export class Check
      *
      * @return Check
      */
-    public static function createBuyReturn(id, userContact, taxSystem, paymentAddress=null)
-    {
-        return new static(id, userContact, static::INTENT_BUY_RETURN, taxSystem,
-                          paymentAddress);
+    public static  createBuyReturn(id, userContact, taxSystem, paymentAddress = null): Check {
+        return new Check(id, userContact, Check.INTENT_BUY_RETURN, taxSystem,
+            paymentAddress);
     }
 
     /**
@@ -143,9 +141,8 @@ export class Check
      *
      * @return Check
      */
-    publicsetShouldPrint(value)
-    {
-        this.shouldPrint = (bool) value;
+    public setShouldPrint(value: boolean): Check {
+        this.shouldPrint = Boolean(value);
 
         return this;
     }
@@ -155,10 +152,8 @@ export class Check
      *
      * @return Check
      */
-    publicaddPayment(Payment payment)
-    {
-        this.payments[] = payment;
-
+    public addPayment(payment: Payment): Check {
+        this.payments.push(payment);
         return this;
     }
 
@@ -167,8 +162,7 @@ export class Check
      *
      * @return Check
      */
-    publicaddBuyer(Buyer buyer)
-    {
+    public addBuyer(buyer: Buyer): Check {
         this.buyer = buyer;
 
         return this;
@@ -179,8 +173,7 @@ export class Check
      *
      * @return Check
      */
-    publicaddCashier(Cashier cashier)
-    {
+    public addCashier(cashier: Cashier): Check {
         this.cashier = cashier;
 
         return this;
@@ -191,9 +184,8 @@ export class Check
      *
      * @return Check
      */
-    publicaddPosition(Position position)
-    {
-        this.positions[] = position;
+    public addPosition(position: Position): Check {
+        this.positions.push(position);
 
         return this;
     }
@@ -201,12 +193,11 @@ export class Check
     /**
      * @return int|float
      */
-    publicgetTotalPositionsSum()
-    {
-        positionsTotal = 0;
-        foreach( this.positions as position )
-        {
-            positionsTotal += position->getTotal();
+    public getTotalPositionsSum(): number {
+        let positionsTotal = 0;
+
+        for (let i = 0; i < this.positions.length; i++) {
+            positionsTotal += this.positions[i].getTotal();
         }
 
         return positionsTotal;
@@ -215,8 +206,7 @@ export class Check
     /**
      * @return array
      */
-    publicgetPositions()
-    {
+    public getPositions(): Position[] {
         return this.positions;
     }
 
@@ -228,26 +218,26 @@ export class Check
      *
      * @return Check
      */
-    publicapplyDiscount(checkDiscount)
-    {
-        positionsTotal = this.getTotalPositionsSum();
-        checkPositions = this.getPositions();
+    public applyDiscount(checkDiscount): Check {
+        let curPositionDiscount: number;
+        let positionsTotal = this.getTotalPositionsSum();
+        let checkPositions = this.getPositions();
 
-        positionsCount = count(checkPositions);
-        accumulatedDiscount = 0;
+        let positionsCount = checkPositions.length;
+        let accumulatedDiscount = 0;
 
-        foreach( checkPositions as index => position )
-        {
-            if (index < positionsCount-1) {
-                positionPricePercent = position->getTotal() / positionsTotal * 100;
-                curPositionDiscount = round(checkDiscount * positionPricePercent / 100, 2);
+        for (let index = 0; index < positionsCount; index++) {
+            if (index < positionsCount - 1) {
+                let positionPricePercent = this.positions[index].getTotal() / positionsTotal * 100;
+                /* TODO: проверить тут округление */
+                curPositionDiscount = Number((checkDiscount * positionPricePercent / 100).toFixed(2));
                 accumulatedDiscount += curPositionDiscount;
             }
             else {
-                curPositionDiscount = round(checkDiscount - accumulatedDiscount, 2);
+                curPositionDiscount = Number((checkDiscount - accumulatedDiscount).toFixed(2));
             }
 
-            position->setTotal(position->getTotal() - curPositionDiscount);
+            this.positions[index].setTotal(this.positions[index].getTotal() - curPositionDiscount);
         }
 
         return this;
@@ -256,34 +246,27 @@ export class Check
     /**
      * @return array
      */
-    publicasArray()
-    {
-        result = [
-            'task_id' => this.id,
-            'user' => this.userContact,
-            'print' => this.shouldPrint,
-            'intent' => this.intent,
-            'sno' => this.taxSystem,
-            'payments' => array_map(
-                function (payment) {
-                    return payment->asArray();
-                },
-                this.payments
-            ),
-            'positions' => array_map(
-                function (position) {
-                    return position->asArray();
-                },
-                this.positions
-            ),
-        ];
+    public asArray() {
+        let result: {} = {
+            'task_id': this.id,
+            'user': this.userContact,
+            'print': this.shouldPrint,
+            'intent': this.intent,
+            'sno': this.taxSystem,
+            'payments': this.payments.map((payment: Payment, key) => {
+                return payment.asArray();
+            }),
+            'positions': this.positions.map((position: Position, key) => {
+                return position.asArray();
+            }),
+        };
 
         if (this.buyer !== null) {
-            result['client'] = this.buyer->asArray();
+            result['client'] = this.buyer.asArray();
         }
 
         if (this.cashier !== null) {
-            result['cashier'] = this.cashier->asArray();
+            result['cashier'] = this.cashier.asArray();
         }
 
         if (this.paymentAddress !== null) {

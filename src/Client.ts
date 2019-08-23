@@ -54,7 +54,7 @@ export class Client {
      *
      * @return Client
      */
-    public setHost(value: string) {
+    public  setHost(value: string) {
         this.host = value;
 
         return this;
@@ -65,7 +65,7 @@ export class Client {
      *
      * @return Client
      */
-    public setPartner(value: string) {
+    public  setPartner(value: string) {
         this.partner = value;
 
         return this;
@@ -86,7 +86,7 @@ export class Client {
      *
      * @return mixed
      */
-    public async sendRequest(path: string, data?: any, method?: any) {
+    public  async sendRequest(path: string, data?: any, method?: any) {
 
         let resp: any;
         let url: string;

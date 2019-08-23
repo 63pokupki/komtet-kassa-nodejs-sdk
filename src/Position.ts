@@ -1,3 +1,6 @@
+import { Vat } from './Vat';
+import { Agent } from './Agent';
+import { Nomenclature } from './Nomenclature';
 
 
 /**
@@ -9,82 +12,81 @@
 
 
 
-export class Position
-{
+export class Position {
     /**
      * @var string
      */
-    private id = null;
+    private id: string = null;
 
     /**
      * @var string
      */
-    private name;
+    private name: string;
 
     /**
      * @var int|float
      */
-    private price;
+    private price: number;
 
     /**
      * @var int|float
      */
-    private quantity;
+    private quantity: number;
 
     /**
      * @var int|float
      */
-    private total;
+    private total: number;
 
     /**
      * @var int|float
      */
-    private discount;
+    private discount: number;
 
     /**
      * @var Vat
      */
-    private vat;
+    private vat: Vat;
 
     /**
      * @var string|null
      */
-    private measureName = null;
+    private measureName: string = null;
 
     /**
      * @var string
      */
-    private calcMethod = null;
+    private calcMethod: string = null;
 
     /**
      * @var string
      */
-    private calcSubject = null;
+    private calcSubject: string = null;
 
     /**
      * @var int|float
      */
-    private excise = null;
+    private excise: number = null;
 
     /**
      * @var string
      */
-    private countryCode = null;
+    private countryCode: string = null;
 
     /**
      * @var string
      */
-    private declarationNumber = null;
+    private declarationNumber: string = null;
 
     /**
      * @var Agent
      */
-    private agent = null;
+    private agent: Agent = null;
 
     /**
      * @var Nomenclature
      */
-    private nomenclature = null;
+    private nomenclature: Nomenclature = null;
 
     /**
      * @param string name Item name
@@ -96,8 +98,7 @@ export class Position
      *
      * @return Position
      */
-    constructor(name, price, quantity, total, discount, Vat vat)
-    {
+    constructor(name: string, price: number, quantity: number, total: number, discount: number, vat: Vat) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -111,8 +112,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetId(value)
-    {
+    public setId(value: string): Position {
         this.id = value;
 
         return this;
@@ -123,8 +123,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetMeasureName(value)
-    {
+    public setMeasureName(value: string): Position {
         this.measureName = value;
 
         return this;
@@ -135,8 +134,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetCalculationMethod(calc_method)
-    {
+    public setCalculationMethod(calc_method: string): Position {
         this.calcMethod = calc_method;
 
         return this;
@@ -147,8 +145,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetCalculationSubject(calc_subject)
-    {
+    public setCalculationSubject(calc_subject: string): Position {
         this.calcSubject = calc_subject;
 
         return this;
@@ -159,8 +156,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetExcise(value)
-    {
+    public setExcise(value: number): Position {
         this.excise = value;
 
         return this;
@@ -171,8 +167,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetCountryCode(value)
-    {
+    public setCountryCode(value: string): Position {
         this.countryCode = value;
 
         return this;
@@ -183,8 +178,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetDeclarationNumber(value)
-    {
+    public setDeclarationNumber(value: string): Position {
         this.declarationNumber = value;
 
         return this;
@@ -195,8 +189,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetAgent(Agent agent)
-    {
+    public setAgent(agent: Agent): Position {
         this.agent = agent;
 
         return this;
@@ -207,8 +200,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetNomenclature(Nomenclature nomenclature)
-    {
+    public setNomenclature(nomenclature: Nomenclature): Position {
         this.nomenclature = nomenclature;
 
         return this;
@@ -217,8 +209,7 @@ export class Position
     /**
      * @return int|float
      */
-    publicgetTotal()
-    {
+    public getTotal(): number {
         return this.total;
     }
 
@@ -227,8 +218,7 @@ export class Position
      *
      * @return Position
      */
-    publicsetTotal(total)
-    {
+    public setTotal(total): Position {
         this.total = total;
 
         return this;
@@ -237,16 +227,15 @@ export class Position
     /**
      * @return array
      */
-    publicasArray()
-    {
-        result = [
-            'name' => this.name,
-            'price' => this.price,
-            'quantity' => this.quantity,
-            'total' => this.total,
-            'discount' => this.discount,
-            'vat' => this.vat->getRate()
-        ];
+    public asArray(): {} {
+        let result = {
+            'name': this.name,
+            'price': this.price,
+            'quantity': this.quantity,
+            'total': this.total,
+            'discount': this.discount,
+            'vat': this.vat.getRate()
+        };
 
         if (this.id !== null) {
             result['id'] = this.id;
@@ -263,11 +252,11 @@ export class Position
         if (this.calcSubject !== null) {
             result['calculation_subject'] = this.calcSubject;
         }
-        
+
         if (this.excise !== null) {
             result['excise'] = this.excise;
         }
-        
+
         if (this.countryCode !== null) {
             result['country_code'] = this.countryCode;
         }
@@ -277,7 +266,7 @@ export class Position
         }
 
         if (this.agent !== null) {
-            result['agent_info'] = this.agent->asArray();
+            result['agent_info'] = this.agent.asArray();
             if (array_key_exists('supplier_info', result['agent_info'])) {
                 result['supplier_info'] = result['agent_info']['supplier_info'];
                 unset(result['agent_info']['supplier_info']);
@@ -285,7 +274,7 @@ export class Position
         }
 
         if (this.nomenclature !== null) {
-            result['nomenclature_code'] = this.nomenclature->asArray();
+            result['nomenclature_code'] = this.nomenclature.asArray();
         }
 
         return result;
