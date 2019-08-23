@@ -9,37 +9,36 @@
 
 
 
-export class Vat
-{
+export class Vat {
     /**
      * Without VAT
      */
-    public  static RATE_NO = 'no';
+    public static RATE_NO = 'no';
 
     /**
      * 0%
      */
-    public  static RATE_0 = '0';
+    public static RATE_0 = '0';
 
     /**
      * 10%
      */
-    public  static RATE_10 = '10';
+    public static RATE_10 = '10';
 
     /**
      * 20%
      */
-    public  static RATE_20 = '20';
+    public static RATE_20 = '20';
 
     /**
      * 10/110
      */
-    public  static RATE_110 = '110';
+    public static RATE_110 = '110';
 
     /**
      * 20/120
      */
-    public  static RATE_120 = '120';
+    public static RATE_120 = '120';
 
     private rate;
 
@@ -48,18 +47,35 @@ export class Vat
      *
      * @return Vat
      */
-    constructor(rate: any)
-    {
+    constructor(rate: any) {
+
+        /* *********************** */
         /* TODO: тут чтото странное очень */
-        if (is_float(rate) && rate < 1 && rate != 0.0) {
-            rate = number_format(rate, 2);
+
+        /* 
+            Оригинал
+        if (is_float($rate) && $rate < 1 && $rate != 0.0) {
+            $rate = number_format($rate, 2);
         }
 
-        if (!is_string(rate)) {
-            rate = (string) rate;
+        if (!is_string($rate)) {
+            $rate = (string) $rate;
         }
 
-        rate = str_replace(['0.', '%'], '', rate);
+        $rate = str_replace(['0.', '%'], '', $rate);
+        */
+
+        if ((typeof rate == 'number') && rate < 1 && rate != 0.0) {
+            rate = Number(rate.toFixed(2));
+        }
+
+
+        rate = String(rate);
+
+        rate = rate.replace('0.', '');
+        rate = rate.replace('%', '');
+
+        /* *********************** */
 
         switch (rate) {
             case '10/110':
@@ -78,15 +94,15 @@ export class Vat
                 rate = Vat.RATE_120;
                 break;
             default:
-                if (!in_array(rate, [
+                if ([
                     Vat.RATE_NO,
                     Vat.RATE_0,
                     Vat.RATE_10,
                     Vat.RATE_20,
                     Vat.RATE_110,
                     Vat.RATE_120,
-                ])) {
-                    throw new \InvalidArgumentException(sprintf('Unknown VAT rate: %s', rate));
+                ].includes(rate)) {
+                    throw `Unknown VAT rate: ${rate}`;
                 }
         }
 
@@ -96,8 +112,7 @@ export class Vat
     /**
      * @return string
      */
-    public  getRate()
-    {
+    public getRate() {
         return this.rate;
     }
 }

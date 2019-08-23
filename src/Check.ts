@@ -14,10 +14,10 @@ import { Position } from './Position';
 
 
 export class Check {
-    public static  INTENT_SELL = 'sell';
-    public static  INTENT_SELL_RETURN = 'sellReturn';
-    public static  INTENT_BUY = 'buy';
-    public static  INTENT_BUY_RETURN = 'buyReturn';
+    public static INTENT_SELL = 'sell';
+    public static INTENT_SELL_RETURN = 'sellReturn';
+    public static INTENT_BUY = 'buy';
+    public static INTENT_BUY_RETURN = 'buyReturn';
 
     /**
      * @var string
@@ -37,7 +37,7 @@ export class Check {
     /**
      * @var int
      */
-    private taxSystem: string;
+    private taxSystem: number;
 
     /**
      * @var string
@@ -78,7 +78,7 @@ export class Check {
      *
      * @return Check
      */
-    constructor(id, userContact, intent, taxSystem, paymentAddress = null) {
+    constructor(id: string, userContact: string, intent: string, taxSystem: number, paymentAddress: string) {
         this.id = id;
         this.userContact = userContact;
         this.intent = intent;
@@ -94,7 +94,7 @@ export class Check {
      *
      * @return Check
      */
-    public static  createSell(id, userContact, taxSystem, paymentAddress = null): Check {
+    public static createSell(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
         return new Check(id, userContact, Check.INTENT_SELL, taxSystem, paymentAddress);
     }
 
@@ -106,7 +106,7 @@ export class Check {
      *
      * @return Check
      */
-    public static  createSellReturn(id, userContact, taxSystem, paymentAddress = null): Check {
+    public static createSellReturn(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
         return new Check(id, userContact, Check.INTENT_SELL_RETURN, taxSystem,
             paymentAddress);
     }
@@ -119,7 +119,7 @@ export class Check {
      *
      * @return Check
      */
-    public static  createBuy(id, userContact, taxSystem, paymentAddress = null): Check {
+    public static createBuy(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
         return new Check(id, userContact, Check.INTENT_BUY, taxSystem, paymentAddress);
     }
 
@@ -131,7 +131,7 @@ export class Check {
      *
      * @return Check
      */
-    public static  createBuyReturn(id, userContact, taxSystem, paymentAddress = null): Check {
+    public static createBuyReturn(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
         return new Check(id, userContact, Check.INTENT_BUY_RETURN, taxSystem,
             paymentAddress);
     }
@@ -218,7 +218,7 @@ export class Check {
      *
      * @return Check
      */
-    public applyDiscount(checkDiscount): Check {
+    public applyDiscount(checkDiscount: number): Check {
         let curPositionDiscount: number;
         let positionsTotal = this.getTotalPositionsSum();
         let checkPositions = this.getPositions();
