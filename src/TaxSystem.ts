@@ -9,35 +9,34 @@
 
 
 
-export class TaxSystem
-{
+export class TaxSystem {
     /**
      * Common tax system
      */
-    public  static COMMON = 0;
+    public static COMMON = 0;
 
     /**
     * Simplified tax system: Income
     */
-    public  static SIMPLIFIED_IN = 1;
+    public static SIMPLIFIED_IN = 1;
 
     /**
      * Simplified tax system: Income - Outgo
      */
-    public  static SIMPLIFIED_IN_OUT = 2;
+    public static SIMPLIFIED_IN_OUT = 2;
 
     /**
      * An unified tax on imputed income
      */
-    public  static UTOII = 3;
+    public static UTOII = 3;
 
     /**
      * Unified social tax
      */
-    public  static UST = 4;
+    public static UST = 4;
 
     /**
      * Patent
      */
-    public  static PATENT = 5;
+    public static PATENT = 5;
 }

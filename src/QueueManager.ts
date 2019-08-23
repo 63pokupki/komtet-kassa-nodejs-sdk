@@ -1,3 +1,5 @@
+import { Client } from './Client';
+import { CorrectionCheck } from './CorrectionCheck';
 
 
 /**
@@ -9,28 +11,26 @@
 
 
 
-export class QueueManager
-{
+export class QueueManager {
     /**
      * @var Client
      */
-    private client;
+    private client: Client;
 
     /**
      * @var array List of registered queues
      */
-    private queues = [];
+    private queues: string[] = [];
 
     /**
      * @var string|null Name of the default queue
      */
-    private defaultQueue = null;
+    private defaultQueue: string = null;
 
     /**
      * @param Client client
      */
-    constructor(Client client)
-    {
+    constructor(client: Client) {
         this.client = client;
     }
 
@@ -42,8 +42,7 @@ export class QueueManager
      *
      * @return QueueManager
      */
-    public registerQueue(name, id)
-    {
+    public registerQueue(name: string, id: string) {
         this.queues[name] = id;
 
         return this;
@@ -56,10 +55,9 @@ export class QueueManager
      *
      * @return QueueManager
      */
-    public setDefaultQueue(name)
-    {
+    public setDefaultQueue(name: string): QueueManager {
         if (!this.hasQueue(name)) {
-            throw new \InvalidArgumentException(sprintf('Unknown queue "%s"', name));
+            throw `Unknown queue "${name}"`;
         }
 
         this.defaultQueue = name;
@@ -74,9 +72,8 @@ export class QueueManager
      *
      * @return bool
      */
-    public hasQueue(name)
-    {
-        return array_key_exists(name, this.queues);
+    public hasQueue(name: string): boolean {
+        return this.queues.includes(name);
     }
 
     /**
@@ -87,21 +84,19 @@ export class QueueManager
      *
      * @return mixed
      */
-    public putCheck(check, queueName = null)
-    {
-        if (queueName === null) {
+    public async putCheck(check: CorrectionCheck, queueName: string) {
+        if (!queueName) {
             if (this.defaultQueue === null) {
-                throw new \LogicException('Default queue is not set');
+                throw 'Default queue is not set';
             }
             queueName = this.defaultQueue;
         }
 
         if (!this.hasQueue(queueName)) {
-            throw new \InvalidArgumentException(sprintf('Unknown queue "%s"', queueName));
+            throw `Unknown queue "${queueName}"`;
         }
 
-        path = sprintf('api/shop/v1/queues/%s/task', this.queues[queueName]);
-        return this.client->sendRequest(path, check->asArray());
+        return await this.client.sendRequest(`api/shop/v1/queues/${this.queues[queueName]}/task`, check.asArray());
     }
 
     /**
@@ -111,13 +106,27 @@ export class QueueManager
      *
      * @return bool
      */
-    public isQueueActive(name)
-    {
+    public async isQueueActive(name): Promise<boolean> {
+
+        let resp = false
+
         if (!this.hasQueue(name)) {
-            throw new \InvalidArgumentException(sprintf('Unknown queue "%s"', name));
+            throw `Unknown queue "${name}"`;
         }
-        path = sprintf('api/shop/v1/queues/%s', this.queues[name]);
-        data = this.client->sendRequest(path);
-        return is_array(data) && array_key_exists('state', data) ? data['state'] == 'active' : false;
+        let path = `api/shop/v1/queues/${this.queues[name]}`;
+
+        try {
+            let data = await this.client.sendRequest(path);
+
+            if (data['state']) {
+                resp = true;
+            }
+
+        } catch (e) {
+
+        }
+
+
+        return resp;
     }
 }

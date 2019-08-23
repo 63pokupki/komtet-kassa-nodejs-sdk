@@ -1,3 +1,5 @@
+import { Client } from './Client';
+import { Order } from './Order';
 
 
 /**
@@ -9,18 +11,16 @@
 
 
 
-export class OrderManager
-{
+export class OrderManager {
     /**
      * @var Client
      */
-    private client;
+    private client: Client;
 
     /**
      * @param Client client
      */
-    constructor(Client client)
-    {
+    constructor(client: Client) {
         this.client = client;
     }
 
@@ -32,10 +32,8 @@ export class OrderManager
      *
      * @return mixed
      */
-    public createOrder(order)
-    {
-        path = sprintf('api/shop/v1/orders');
-        return this.client->sendRequest(path, order->asArray());
+    public createOrder(order: Order) {
+        return this.client.sendRequest('api/shop/v1/orders', order.asArray());
     }
 
 
@@ -47,24 +45,20 @@ export class OrderManager
      *
      * @return mixed
      */
-    public updateOrder(oid, order)
-    {
-        path = sprintf('api/shop/v1/orders/%s', oid);
-        return this.client->sendRequest(path, order->asArray(), 'PUT');
+    public updateOrder(oid: number, order: Order) {
+        return this.client.sendRequest(`api/shop/v1/orders/${oid}`, order.asArray(), 'PUT');
     }
 
 
-   /**
-    * Viewing order information
-    *
-    * @param int oid Order ID
-    *
-    * @return mixed
-    */
-    public getOrderInfo(oid)
-    {
-        path = sprintf('api/shop/v1/orders/%s', oid);
-        return this.client->sendRequest(path);
+    /**
+     * Viewing order information
+     *
+     * @param int oid Order ID
+     *
+     * @return mixed
+     */
+    public getOrderInfo(oid) {
+        return this.client.sendRequest(`api/shop/v1/orders/${oid}`);
     }
 
 
@@ -75,10 +69,8 @@ export class OrderManager
      *
      * @return mixed
      */
-    public deleteOrder(oid)
-    {
-        path = sprintf('api/shop/v1/orders/%s', oid);
-        return this.client->sendRequest(path, null, 'DELETE');
+    public deleteOrder(oid) {
+        return this.client.sendRequest(`api/shop/v1/orders/${oid}`, null, 'DELETE');
     }
 
     /**
@@ -91,17 +83,19 @@ export class OrderManager
      *
      * @return mixed
      */
-    public getOrders(start='0', limit='10', courier_id=null, date_start=null)
-    {
-        path = sprintf('api/shop/v1/orders?start=%s&limit=%s', start, limit);
+    public getOrders(start = '0', limit = '10', courier_id: string, date_start: string) {
+
+        let path = `api/shop/v1/orders?start=${start}&limit=${limit}`;
 
         if (courier_id !== null) {
-            path .= sprintf('&courier_id=%s', courier_id);
+            path += `&courier_id=${courier_id}`;
         }
 
         if (date_start !== null) {
-            path .= sprintf('&date_start=%s', date_start);
+            path += `&date_start=${date_start}`;
         }
-        return this.client->sendRequest(path);
+        return this.client.sendRequest(path);
+
     }
+
 }

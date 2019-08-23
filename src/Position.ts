@@ -267,10 +267,16 @@ export class Position {
 
         if (this.agent !== null) {
             result['agent_info'] = this.agent.asArray();
-            if (array_key_exists('supplier_info', result['agent_info'])) {
-                result['supplier_info'] = result['agent_info']['supplier_info'];
-                unset(result['agent_info']['supplier_info']);
+
+            try {
+                if (result['agent_info']['supplier_info']) {
+                    result['supplier_info'] = result['agent_info']['supplier_info'];
+                    delete result['agent_info']['supplier_info'];
+                }
+            } catch (e) {
+
             }
+
         }
 
         if (this.nomenclature !== null) {

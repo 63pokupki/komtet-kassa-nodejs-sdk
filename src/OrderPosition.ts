@@ -1,3 +1,4 @@
+import { Vat } from './Vat';
 
 
 /**
@@ -9,47 +10,46 @@
 
 
 
-export class OrderPosition
-{
+export class OrderPosition {
     /**
      * @var string
      */
-    private oid;
+    private oid: string;
 
     /**
      * @var string
      */
-    private name;
+    private name: string;
 
     /**
      * @var int|float
      */
-    private price;
+    private price: number;
 
     /**
      * @var int|float
      */
-    private quantity;
+    private quantity: number;
 
     /**
      * @var int|float
      */
-    private total;
+    private total: number;
 
     /**
      * @var Vat
      */
-    private vat;
+    private vat: Vat;
 
     /**
      * @var string
      */
-    private type;
+    private type: string;
 
     /**
      * @var string
      */
-    private measure_name;
+    private measure_name: string;
 
     /**
      * @param string oid Item identifier
@@ -62,16 +62,14 @@ export class OrderPosition
      *
      * @return OrderPosition
      */
-    constructor(args = [])
-    {
-        defaultArgs = [
-            'vat' :  Vat::RATE_NO,
-            'total' : null,
-            'measure_name' : null,
-            'type' : null,
-            'quantity' : 1
-        ];
-        args = array_merge(defaultArgs, args);
+    constructor(args: {
+        vat: string,
+        total: number,
+        measure_name: string,
+        type: string,
+        quantity: number
+    }) {
+
 
         if (args['total'] == null) {
             args['total'] = args['price'] * args['quantity'];
@@ -96,8 +94,7 @@ export class OrderPosition
     /**
      * @return int|float
      */
-    public getTotal()
-    {
+    public getTotal(): number {
         return this.total;
     }
 
@@ -106,8 +103,7 @@ export class OrderPosition
      *
      * @return OrderPosition
      */
-    public setTotal(total)
-    {
+    public setTotal(total): OrderPosition {
         this.total = total;
 
         return this;
@@ -116,16 +112,15 @@ export class OrderPosition
     /**
      * @return array
      */
-    public asArray()
-    {
-        result = [
-            'order_item_id' : this.oid,
-            'name' : this.name,
-            'price' : this.price,
-            'quantity' : this.quantity,
-            'total' : this.total,
-            'vat' : this.vat->getRate()
-        ];
+    public asArray() {
+        let result = {
+            'order_item_id': this.oid,
+            'name': this.name,
+            'price': this.price,
+            'quantity': this.quantity,
+            'total': this.total,
+            'vat': this.vat.getRate()
+        };
 
         if (this.measure_name !== null) {
             result['measure_name'] = this.measure_name;
