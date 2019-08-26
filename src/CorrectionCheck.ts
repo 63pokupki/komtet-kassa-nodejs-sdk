@@ -3,6 +3,7 @@ import { Payment } from "./Payment";
 import { Vat } from "./Vat";
 import { AuthorisedPerson } from "./AuthorisedPerson";
 import { Position } from "./Position";
+import { BaseCheck } from "./BaseCheck";
 
 /**
  * This file is part of the komtet/kassa-sdk library
@@ -13,49 +14,49 @@ import { Position } from "./Position";
 
 
 
-export class CorrectionCheck {
+export class CorrectionCheck extends BaseCheck {
     public static INTENT_SELL = 'sellCorrection';
     public static INTENT_SELL_RETURN = 'sellReturnCorrection';
 
     /**
      * @var string
      */
-    private id: string;
+    protected id: string;
 
     /**
      * @var string
      */
-    private intent: string;
+    protected intent: string;
 
     /**
      * @var string
      */
-    private printerNumber: string;
+    protected printerNumber: string;
 
     /**
      * @var int
      */
-    private taxSystem: number;
+    protected taxSystem: number;
 
     /**
      * @var Correction
      */
-    private correction: Correction;
+    protected correction: Correction;
 
     /**
      * @var Payment
      */
-    private payment: Payment;
+    protected payment: Payment;
 
     /**
      * @var Position
      */
-    private position: Position;
+    protected position: Position;
 
     /**
      * @var AuthorisedPerson
      */
-    private authorised_person: AuthorisedPerson;
+    protected authorised_person: AuthorisedPerson;
 
     /**
      * @param string id An unique ID provided by an online store
@@ -67,6 +68,7 @@ export class CorrectionCheck {
      * @return CorrectionCheck
      */
     constructor(id: string, intent: string, printerNumber: string, taxSystem: number, correction: Correction) {
+        super(id, intent, printerNumber, taxSystem);
         this.id = id;
         this.intent = intent;
         this.printerNumber = printerNumber;

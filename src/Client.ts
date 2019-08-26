@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 import axios from 'axios';
-import { ErrorSys } from './ErrorSys';
+import { ErrorSys } from "@a-a-game-studio/aa-components/aLib";
 
 export class Client {
     /**
@@ -128,7 +128,7 @@ export class Client {
             });
 
         } catch (e) {
-            this.errorSys.error('Komtet.Client.sendRequest', e);
+            this.errorSys.error('Komtet.Client.sendRequest', String(e));
         }
 
 

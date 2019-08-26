@@ -2,7 +2,6 @@ import { Cashier } from "./Cashier";
 import { Buyer } from './Buyer';
 import { Payment } from "./Payment";
 import { Position } from './Position';
-import { BaseCheck } from "./BaseCheck";
 
 
 /**
@@ -14,7 +13,7 @@ import { BaseCheck } from "./BaseCheck";
 
 
 
-export class Check extends BaseCheck {
+export class BaseCheck {
     public static INTENT_SELL = 'sell';
     public static INTENT_SELL_RETURN = 'sellReturn';
     public static INTENT_BUY = 'buy';
@@ -23,52 +22,48 @@ export class Check extends BaseCheck {
     /**
      * @var string
      */
-    private id: string;
+    protected id: string;
 
     /**
      * @var string
      */
-    private userContact: string;
+    protected userContact: string;
 
     /**
      * @var string
      */
-    private intent: string;
+    protected intent: string;
 
     /**
      * @var int
      */
-    private taxSystem: number;
+    protected taxSystem: number;
 
-    /**
-     * @var string
-     */
-    private paymentAddress: string;
 
     /**
      * @var bool
      */
-    private shouldPrint = false;
+    protected shouldPrint = false;
 
     /**
      * @var Payment[]
      */
-    private payments: Payment[] = [];
+    protected payments: Payment[] = [];
 
     /**
      * @var Position[]
      */
-    private positions: Position[] = [];
+    protected positions: Position[] = [];
 
     /**
      * @var buyer
      */
-    private buyer: Buyer;
+    protected buyer: Buyer;
 
     /**
      * @var Cashier
      */
-    private cashier: Cashier;
+    protected cashier: Cashier;
 
     /**
      * @param string id An unique ID provided by an online store
@@ -79,70 +74,20 @@ export class Check extends BaseCheck {
      *
      * @return Check
      */
-    constructor(id: string, userContact: string, intent: string, taxSystem: number, paymentAddress: string) {
+    constructor(id: string, userContact: string, intent: string, taxSystem: number) {
         this.id = id;
         this.userContact = userContact;
         this.intent = intent;
         this.taxSystem = taxSystem;
-        this.paymentAddress = paymentAddress;
     }
 
-    /**
-     * @param string id
-     * @param string userContact
-     * @param int    taxSystem
-     * @param string paymentAddress
-     *
-     * @return Check
-     */
-    public static createSell(id: string, userContact: string, taxSystem: number, paymentAddress?: string): Check {
-        return new Check(id, userContact, Check.INTENT_SELL, taxSystem, paymentAddress);
-    }
-
-    /**
-     * @param string id
-     * @param string userContact
-     * @param int    taxSystem
-     * @param string paymentAddress
-     *
-     * @return Check
-     */
-    public static createSellReturn(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
-        return new Check(id, userContact, Check.INTENT_SELL_RETURN, taxSystem,
-            paymentAddress);
-    }
-
-    /**
-     * @param string id
-     * @param string userContact
-     * @param int    taxSystem
-     * @param string paymentAddress
-     *
-     * @return Check
-     */
-    public static createBuy(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
-        return new Check(id, userContact, Check.INTENT_BUY, taxSystem, paymentAddress);
-    }
-
-    /**
-     * @param string id
-     * @param string userContact
-     * @param int    taxSystem
-     * @param string paymentAddress
-     *
-     * @return Check
-     */
-    public static createBuyReturn(id: string, userContact: string, taxSystem: number, paymentAddress: string): Check {
-        return new Check(id, userContact, Check.INTENT_BUY_RETURN, taxSystem,
-            paymentAddress);
-    }
 
     /**
      * @param bool value
      *
      * @return Check
      */
-    public setShouldPrint(value: boolean): Check {
+    public setShouldPrint(value: boolean): BaseCheck {
         this.shouldPrint = Boolean(value);
 
         return this;
@@ -153,7 +98,7 @@ export class Check extends BaseCheck {
      *
      * @return Check
      */
-    public addPayment(payment: Payment): Check {
+    public addPayment(payment: Payment): BaseCheck {
         this.payments.push(payment);
         return this;
     }
@@ -163,7 +108,7 @@ export class Check extends BaseCheck {
      *
      * @return Check
      */
-    public addBuyer(buyer: Buyer): Check {
+    public addBuyer(buyer: Buyer): BaseCheck {
         this.buyer = buyer;
 
         return this;
@@ -174,7 +119,7 @@ export class Check extends BaseCheck {
      *
      * @return Check
      */
-    public addCashier(cashier: Cashier): Check {
+    public addCashier(cashier: Cashier): BaseCheck {
         this.cashier = cashier;
 
         return this;
@@ -185,7 +130,7 @@ export class Check extends BaseCheck {
      *
      * @return Check
      */
-    public addPosition(position: Position): Check {
+    public addPosition(position: Position): BaseCheck {
         this.positions.push(position);
 
         return this;
@@ -219,7 +164,7 @@ export class Check extends BaseCheck {
      *
      * @return Check
      */
-    public applyDiscount(checkDiscount: number): Check {
+    public applyDiscount(checkDiscount: number): BaseCheck {
         let curPositionDiscount: number;
         let positionsTotal = this.getTotalPositionsSum();
         let checkPositions = this.getPositions();
@@ -247,33 +192,7 @@ export class Check extends BaseCheck {
     /**
      * @return array
      */
-    public asArray() {
-        let result: { [key: string]: any } = {
-            'task_id': this.id,
-            'user': this.userContact,
-            'print': this.shouldPrint,
-            'intent': this.intent,
-            'sno': this.taxSystem,
-            'payments': this.payments.map((payment: Payment, key) => {
-                return payment.asArray();
-            }),
-            'positions': this.positions.map((position: Position, key) => {
-                return position.asArray();
-            }),
-        };
-
-        if (this.buyer !== null) {
-            result['client'] = this.buyer.asArray();
-        }
-
-        if (this.cashier !== null) {
-            result['cashier'] = this.cashier.asArray();
-        }
-
-        if (this.paymentAddress !== null) {
-            result['payment_address'] = this.paymentAddress;
-        }
-
-        return result;
+    public asArray(): { [key: string]: any } {
+        return {};
     }
 }
