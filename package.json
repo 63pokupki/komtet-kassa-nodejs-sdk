@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/63pokupki/komtet-kassa-nodejs-sdk#readme",
   "dependencies": {
-    "@a-a-game-studio/aa-components": "^1.0.2",
+    "@a-a-game-studio/aa-components": "^1.1.42",
     "@types/chai": "^4.2.0",
     "@types/node": "^12.7.2",
     "axios": "^0.19.0",
